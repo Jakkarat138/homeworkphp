@@ -100,7 +100,7 @@
             $height = floatval($_POST['height']);
 
             // คำนวณค่า BMI
-            $heightInMeters = $height / 100;
+            /*$heightInMeters = $height / 100;
             $bmi = $weight / ($heightInMeters * $heightInMeters);
             $bmi = round($bmi, 2);
 
@@ -117,17 +117,41 @@
             } else {
                 $category = "อ้วนมากเเล้วระวังเดินไม่ได้นะะะ";
                 $advice = "คุณควรปรึกษาแพทย์เพื่อคำแนะนำเพิ่มเติม.";
-            }
-
-            // แสดงผลลัพธ์
+            } */
             echo "<div class='result'>";
             echo "<h2>ผลลัพธ์ BMI</h2>";
             echo "<p><strong>ชื่อ-นามสกุล:</strong> $firstname $lastname</p>";
             echo "<p><strong>อายุ:</strong> $age ปี</p>";
-            echo "<p><strong>BMI:</strong> $bmi ($category) </p>";
-            echo "<p><strong>คำแนะนำ:</strong> $advice</p>";
+            $bmi = bmi($weight,$height);
+            echo "<p><strong>BMI:</strong> $bmi</p>";
+            bmi2($bmi);
             echo "</div>";
         }
+
+        function bmi($weight,$height){
+            $heightInMeters = $height / 100;
+            $bmi = $weight / ($heightInMeters * $heightInMeters);
+            $bmi = round($bmi, 2);
+            return $bmi;
+        }
+
+        function bmi2($bmi){
+            if ($bmi < 18.5) {
+                $category = "Underweight";
+                $advice = "คุณควรกินอาหารที่มีสารอาหารครบถ้วนเพื่อเพิ่มน้ำหนัก.";
+            } elseif ($bmi < 24.9) {
+                $category = "Normal weight";
+                $advice = "ยอดเยี่ยม! รักษารูปร่างและสุขภาพให้ดีต่อไป.";
+            } elseif ($bmi < 29.9) {
+                $category = "Overweight";
+                $advice = "คุณควรเริ่มออกกำลังกายและควบคุมอาหาร.";
+            } else {
+                $category = "Obesity";
+                $advice = "คุณควรปรึกษาแพทย์เพื่อคำแนะนำเพิ่มเติม.";
+            }
+            echo "<p><strong>คำแนะนำ:</strong> $category,$advice</p>";
+        }
+            
         ?>
     </div>
 </body>
